@@ -41,6 +41,7 @@ export const useSavedState = <TValue extends object | string | number | []>({
    * Get state for save
    */
   const getStateForSaveRef = useRef<GetStateForSave<TValue>>(getStateForSave);
+  
 
   /**
    * Local Storage Model
@@ -56,9 +57,12 @@ export const useSavedState = <TValue extends object | string | number | []>({
 
       if (savedValue) {
         if (typeof savedValue === 'object') {
+          console.log("saveValue as an Object: ", savedValue);
           setValue((value) => merge({ ...(value as object) }, savedValue));
         } else {
+          console.log("saveValue as an notObject: ", savedValue);
           setValue(savedValue);
+          
         }
       }
       setLoaded(true);

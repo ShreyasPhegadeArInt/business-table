@@ -359,6 +359,25 @@ describe('editableColumnEditorsRegistry', () => {
       });
     });
 
+    it('Should allow to set hideDropDuplicates option', () => {
+      render(
+        getEditorComponent({
+          value: createColumnEditConfig({ editor: { type: ColumnEditorType.SELECT } }).editor,
+          data: [toDataFrame({ refId: 'A', fields: [{ name: 'value', values: [] }] })],
+        })
+      );
+
+      expect(editorSelectors.fieldHideDropDuplicates()).toBeInTheDocument();
+      expect(editorSelectors.fieldHideDropDuplicates()).not.toBeChecked();
+
+      fireEvent.click(editorSelectors.fieldHideDropDuplicates());
+
+      expect(onChangeConfig).toHaveBeenCalledWith({
+        type: ColumnEditorType.SELECT,
+        hideDropDuplicates: true,
+      });
+    });
+
     it('Should render control', () => {
       render(
         getControlComponent({
