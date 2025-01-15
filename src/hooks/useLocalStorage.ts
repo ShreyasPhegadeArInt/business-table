@@ -10,6 +10,7 @@ export const useLocalStorage = (key: string, version: number) => {
       const parsed = JSON.parse(json);
 
       if (parsed?.version === version) {
+        console.log("parsed.data is: ", parsed);
         return parsed.data;
       }
 

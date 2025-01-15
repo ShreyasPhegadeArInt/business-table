@@ -74,7 +74,6 @@ export const useTable = ({
         items: [],
       };
     }
-
     const frame = getFrameBySource(data.series, columnsConfig?.[0].field);
 
     /**
@@ -111,8 +110,31 @@ export const useTable = ({
       return [];
     }
 
-    const rows = [];
+    const field_Names: string[] = []; /** capture field names */
 
+    columnsData.items.forEach(item => {
+      let fieldFound = false;
+      for (let i = 0; i < field_Names.length; i += 1){
+        if(field_Names[i] == item.field.name){
+          fieldFound = true;
+        }
+      }
+      if(fieldFound != true){
+        field_Names.push(item.field.name);
+      }
+    });
+
+    /** PRINT RESULT OF GETTING FIELD NAMES */
+    //console.log("Field Names are: ", field_Names);
+    let service_name_found = false;
+    for (let i = 0; i < field_Names.length; i += 1){
+      if (field_Names[i] == "Service_Name"){
+        service_name_found = true;
+      }
+    }
+    //console.log(service_name_found);
+    const rows = [];
+    const serviceHMAP = new Map<string, any>();
     for (let rowIndex = 0; rowIndex < columnsData.frame.length; rowIndex += 1) {
       const row = columnsData.items.reduce(
         (acc, item) => ({
@@ -122,7 +144,16 @@ export const useTable = ({
         {}
       );
 
-      rows.push(row);
+      
+      if(service_name_found){
+        let temp = (String)(row.Service_Name);
+        if (serviceHMAP.has(temp)) {
+          console.log("Key", temp, "exists!");
+        }else{
+          serviceHMAP.set(temp, true);
+          rows.push(row);
+        }
+      }
     }
 
     return rows;
@@ -451,7 +482,7 @@ export const useTable = ({
     templateService,
     theme,
   ]);
-
+  
   return useMemo(
     () => ({
       tableData,

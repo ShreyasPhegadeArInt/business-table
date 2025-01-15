@@ -182,6 +182,22 @@ export const editableColumnEditorsRegistry = createEditableColumnEditorsRegistry
             />
           </InlineField>
         </InlineFieldRow>
+        <InlineFieldRow>
+          <InlineField label="Allow hide dupes" grow={true}>
+            <InlineSwitch
+              value={value.hideDropDuplicates}
+              onChange={(event) =>
+                onChange(
+                  cleanPayloadObject({
+                    ...value,
+                    hideDropDuplicates: event.currentTarget.checked,
+                  })
+                )
+              }
+              {...TEST_IDS.editableColumnEditor.fieldHideDropDuplicates.apply()}
+            />
+          </InlineField>
+        </InlineFieldRow>
       </>
     ),
     control: ({ value, onChange, config }) => {
@@ -191,20 +207,22 @@ export const editableColumnEditorsRegistry = createEditableColumnEditorsRegistry
           onChange={(event) => onChange(event.value)}
           options={config.options}
           allowCustomValue={config.customValues}
+          allowHideDropDuplicates={config.hideDropDuplicates}
           {...TEST_IDS.editableCell.fieldSelect.apply()}
         />
       );
     },
     getControlOptions: ({ config, data }) => {
       const queryOptions = config.queryOptions;
-
       const controlOptions = {
         type: config.type,
         customValues: config.customValues ?? false,
+        hideDropDuplicates: config.hideDropDuplicates ?? false,
         options: [],
       };
 
       if (!queryOptions || !queryOptions.value) {
+        console.log("Probably no queryOptions values");
         return controlOptions;
       }
 
@@ -212,17 +230,39 @@ export const editableColumnEditorsRegistry = createEditableColumnEditorsRegistry
       const valueField = frame?.fields.find((field) => field.name === queryOptions.value);
 
       if (!frame || !valueField) {
+        console.log("Probably no valueField");
         return controlOptions;
       }
 
       const labelValues = frame?.fields.find((field) => field.name === queryOptions.label)?.values || valueField.values;
+      let options= valueField.values.map((value, index) => ({
+        value,
+        label: labelValues[index] as string,
+      }))
+      
+      const new_options = [];
+      if(controlOptions.hideDropDuplicates){
+        for (let i = 0; i < options.length; i += 1){
+          if(new_options.length < 1){
+            new_options.push(options[i]);
+          }else{
+            let shouldAdd = true;
+            for (let j = 0; j < new_options.length; j += 1){
+              if(options[i].value == new_options[j].value){
+                shouldAdd = false;
+              }
+            }
+            if(shouldAdd){
+              new_options.push(options[i]);
+            }
+          }
+        }
+        options = new_options;
+      }
 
       return {
         ...controlOptions,
-        options: valueField.values.map((value, index) => ({
-          value,
-          label: labelValues[index] as string,
-        })),
+        options,
       };
     },
   }),

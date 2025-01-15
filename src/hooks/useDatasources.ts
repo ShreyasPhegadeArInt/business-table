@@ -32,11 +32,11 @@ export const useDatasources = () => {
           return dataSource.uid !== 'grafana';
         },
       });
+      
       setDatasources(dsList);
     };
 
     fetchData();
   }, []);
-
   return datasources;
 };

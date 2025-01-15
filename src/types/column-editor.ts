@@ -76,6 +76,13 @@ interface EditorSelectOptions {
    * @type {boolean}
    */
   customValues?: boolean;
+
+  /**
+   * Custom values
+   *
+   * @type {boolean}
+   */
+  hideDropDuplicates?: boolean;
 }
 
 interface EditorDatetimeOptions {
@@ -118,7 +125,7 @@ export type ColumnEditorControlOptions =
   | { type: ColumnEditorType.TEXTAREA }
   | ({ type: ColumnEditorType.NUMBER } & EditorNumberOptions)
   | ({ type: ColumnEditorType.DATETIME } & EditorDatetimeOptions)
-  | ({ type: ColumnEditorType.SELECT } & { options: SelectableValue[]; customValues: boolean });
+  | ({ type: ColumnEditorType.SELECT } & { options: SelectableValue[]; customValues: boolean; hideDropDuplicates: boolean});
 
 /**
  * Editable Column Editor Registry Item

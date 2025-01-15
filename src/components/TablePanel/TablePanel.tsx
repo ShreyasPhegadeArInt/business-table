@@ -43,7 +43,6 @@ export const TablePanel: React.FC<Props> = ({
    * Styles
    */
   const styles = useStyles2(getStyles);
-
   const [error, setError] = useState('');
 
   /**

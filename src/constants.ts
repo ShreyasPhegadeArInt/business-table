@@ -225,6 +225,7 @@ export const TEST_IDS = {
     fieldDatetimeMin: createSelector('data-testid column-editor field-datetime-min'),
     fieldDatetimeMax: createSelector('data-testid column-editor field-datetime-max'),
     fieldCustomValues: createSelector('data-testid column-editor field-custom-values'),
+    fieldHideDropDuplicates: createSelector('data-testid column-editor field-hide-dupes')
   },
   dateEditor: {
     field: createSelector('data-testid date-editor field'),

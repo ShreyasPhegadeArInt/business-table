@@ -41,6 +41,7 @@ export const useSavedState = <TValue extends object | string | number | []>({
    * Get state for save
    */
   const getStateForSaveRef = useRef<GetStateForSave<TValue>>(getStateForSave);
+  
 
   /**
    * Local Storage Model
@@ -53,13 +54,17 @@ export const useSavedState = <TValue extends object | string | number | []>({
   useEffect(() => {
     const getSavedValue = async () => {
       const savedValue = await getValue();
-
       if (savedValue) {
         if (typeof savedValue === 'object') {
+          console.log("saveValue as an Object: ", savedValue);
           setValue((value) => merge({ ...(value as object) }, savedValue));
         } else {
+          console.log("saveValue as an notObject: ", savedValue);
           setValue(savedValue);
+          
         }
+      }else{
+        console.log("saveState is false or null");
       }
       setLoaded(true);
     };
@@ -78,13 +83,14 @@ export const useSavedState = <TValue extends object | string | number | []>({
         const newValue = typeof updated === 'function' ? updated(value) : updated;
 
         if (enabled) {
+          console.log("updatingState");
           saveValue(getStateForSaveRef.current(newValue));
         }
+        //console.log("newValue is: ", newValue);
         return newValue;
       });
     },
     [enabled, saveValue]
   );
-
   return [value, update, loaded];
 };
