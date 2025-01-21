@@ -353,6 +353,13 @@ export const Table = <TData,>({
   const { rows } = table.getRowModel();
   console.log("rows in Table.tsx: ", rows);
 
+  // ######## Comparison test requirement ########
+  // const testCompItself = JSON.stringify(rows[0].original) == JSON.stringify(rows[0].original)
+  // const deepCopy = JSON.parse(JSON.stringify(rows[0].original));
+  // const testCompDeep = JSON.stringify(rows[0].original) == JSON.stringify(deepCopy)
+  // console.log("comparison to itself: ", testCompItself, "\tcomparison to deepcopy: ", testCompDeep);
+
+
   /**
    * Row Virtualizer
    * Options description - https://tanstack.com/virtual/v3/docs/api/virtualizer
