@@ -225,6 +225,7 @@ export const TableRow = <TData,>({
     /**
      * Edit Active
      */
+    //console.log("editingRow is: ", editingRow, "\trow is: ", row);
     if (!!editingRow) {
       if (cell.column.id !== ACTIONS_COLUMN_ID) {
         if (isNewRow) {

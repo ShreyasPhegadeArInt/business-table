@@ -76,6 +76,8 @@ export const TableActionsCell: React.FC<Props> = ({
   isDeleteRowEnabled,
   onDelete,
 }) => {
+  //console.log("row is: ", row);
+  //console.log("isEditRowEnabled: ", isEditRowEnabled, "\tisEditing: ", isEditing);
   if (isEditing) {
     return (
       <Stack gap={0.5}>

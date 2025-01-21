@@ -70,7 +70,7 @@ export const useUpdateRow = ({
       if (!request) {
         return;
       }
-
+      
       try {
         const response = await datasourceRequest({
           query: request.payload,

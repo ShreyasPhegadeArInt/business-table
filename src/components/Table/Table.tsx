@@ -351,6 +351,7 @@ export const Table = <TData,>({
    * Rows
    */
   const { rows } = table.getRowModel();
+  console.log("rows in Table.tsx: ", rows);
 
   /**
    * Row Virtualizer
