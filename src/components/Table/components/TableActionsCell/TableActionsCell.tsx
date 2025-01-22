@@ -3,7 +3,7 @@ import { CellContext, Row } from '@tanstack/react-table';
 import React from 'react';
 
 import { TEST_IDS } from '@/constants';
-
+import { getGlobalValue, setGlobalValue } from '../../GlobalRowOriginal';
 /**
  * Properties
  */
@@ -76,7 +76,9 @@ export const TableActionsCell: React.FC<Props> = ({
   isDeleteRowEnabled,
   onDelete,
 }) => {
-  //console.log("row is: ", row);
+  console.log("row is: ", row);
+  console.log("eOriginal: ", getGlobalValue());
+  setGlobalValue("New");
   //console.log("isEditRowEnabled: ", isEditRowEnabled, "\tisEditing: ", isEditing);
   if (isEditing) {
     return (

@@ -28,6 +28,7 @@ import { ColumnHeaderFontSize, ColumnPinDirection, Pagination as PaginationOptio
 import { TableHeaderCell, TableRow } from './components';
 import { useAddData, useDeleteData, useEditableData, useSortState, useSyncedColumnFilters } from './hooks';
 import { getStyles } from './Table.styles';
+import { getGlobalValue, setGlobalValue} from './GlobalRowOriginal';
 
 /**
  * Default Column Sizing
@@ -352,6 +353,7 @@ export const Table = <TData,>({
    */
   const { rows } = table.getRowModel();
   console.log("rows in Table.tsx: ", rows);
+  console.log("Current Value is: ", getGlobalValue());
 
   // ######## Comparison test requirement ########
   // const testCompItself = JSON.stringify(rows[0].original) == JSON.stringify(rows[0].original)
