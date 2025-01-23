@@ -76,11 +76,12 @@ export const TableActionsCell: React.FC<Props> = ({
   isDeleteRowEnabled,
   onDelete,
 }) => {
-  console.log("row is: ", row);
-  console.log("eOriginal: ", getGlobalValue());
-  setGlobalValue("New");
+  //console.log("row is: ", row);
+  
   //console.log("isEditRowEnabled: ", isEditRowEnabled, "\tisEditing: ", isEditing);
   if (isEditing) {
+    console.log("Since in edit, change to: EDITING");
+    setGlobalValue("EDITING");
     return (
       <Stack gap={0.5}>
         <IconButton

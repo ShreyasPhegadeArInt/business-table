@@ -352,7 +352,7 @@ export const Table = <TData,>({
    * Rows
    */
   const { rows } = table.getRowModel();
-  console.log("rows in Table.tsx: ", rows);
+  //console.log("rows in Table.tsx: ", rows);
   console.log("Current Value is: ", getGlobalValue());
 
   // ######## Comparison test requirement ########
