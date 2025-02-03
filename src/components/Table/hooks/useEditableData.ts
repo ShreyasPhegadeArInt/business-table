@@ -2,6 +2,7 @@ import { CoreRow, createRow, Row, Table } from '@tanstack/react-table';
 import { useCallback, useMemo, useState } from 'react';
 
 import { ColumnEditorType } from '@/types';
+import { getGlobalValue, setGlobalValue } from '../GlobalRowOriginal';
 
 /**
  * Use Editable Data
@@ -31,6 +32,9 @@ export const useEditableData = <TData>({
       /**
        * Columns
        */
+      console.log("\n\nCurrent Value is: ", getGlobalValue());
+      console.log("Set GBV-->: EDITING");
+      setGlobalValue("EDITING");
       const columns = table.getAllColumns();
 
       /**
@@ -68,6 +72,9 @@ export const useEditableData = <TData>({
    * Cancel Edit
    */
   const onCancelEdit = useCallback(() => {
+    console.log("\n\nCurrent Value is: ", getGlobalValue());
+    console.log("Set GBV-->: NOT_EDITING");
+    setGlobalValue("NOT_EDITING");
     setRow(null);
   }, []);
 
