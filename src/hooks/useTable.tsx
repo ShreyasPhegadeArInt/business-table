@@ -35,6 +35,7 @@ import {
 } from '@/utils';
 
 import { useNestedObjects } from './useNestedObjects';
+import { getGlobalValue, getRIE, getRowInd } from '@/components/Table/GlobalRowOriginal';
 
 /**
  * Use Table
@@ -124,6 +125,7 @@ export const useTable = ({
       }
     });
 
+    console.log("useTable has been called");
     /** PRINT RESULT OF GETTING FIELD NAMES */
     //console.log("Field Names are: ", field_Names);
     let service_name_found = false;
@@ -148,13 +150,60 @@ export const useTable = ({
       if(service_name_found){
         let temp = (String)(row.Service_Name);
         if (serviceHMAP.has(temp)) {
-          console.log("Key", temp, "exists!");
+          // console.log("Key", temp, "exists!");
         }else{
           serviceHMAP.set(temp, true);
           rows.push(row);
         }
       }
     }
+
+
+    if(getGlobalValue() == "EDITING"){
+      const storedInd = getRowInd();
+      const rowAtIndexOG = JSON.stringify(rows[storedInd]);
+      const rowInEditOG = getRIE();
+      // console.log("RAI: ", rowAtIndexOG);
+      // console.log("RIE: ", rowInEditOG);
+      // console.log("Row Match: ", rowAtIndexOG == rowInEditOG);
+      if(rowAtIndexOG != rowInEditOG){
+        console.log("IT DONT MATCH");
+        
+        // PARSE EACH ROW FOR MATCHING OG ROW. IF FOUND, UPDATE ROW, ELSE ADD IN ROW AT INDEX
+
+        let foundInd = false;
+        let i = storedInd;
+        let j = storedInd;
+        while(i < rows.length || j >= 0){
+          if(i < rows.length){
+            if(rowInEditOG == JSON.stringify(rows[i])){
+              console.log("Row at ", storedInd, "\tFound at index: ", i);
+              foundInd = true;
+              rows.splice(i, 1);
+              rows.splice(storedInd, 0, JSON.parse(rowInEditOG));
+              break;
+            }
+          }
+
+          if(j >= 0){
+            if(rowInEditOG == JSON.stringify(rows[j])){
+              console.log("Row at ", storedInd, "\tFound at index: ", j);
+              foundInd = true;
+              rows.splice(j, 1);
+              rows.splice(storedInd, 0, JSON.parse(rowInEditOG));
+              break;
+            }
+          }
+          i++;
+          j--;
+        }
+        if(!foundInd){
+          console.log("NOT FOUND. Add at index: ", storedInd);
+          rows.splice(getRowInd(), 0, JSON.parse(rowInEditOG));
+        }
+      }
+    }
+
 
     return rows;
   }, [columnsData]);

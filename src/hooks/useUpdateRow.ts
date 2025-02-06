@@ -51,9 +51,9 @@ export const useUpdateRow = ({
           break;
         }
         case 'update': {
-          console.log("Current value of currentTable is: ", currentTable);
+          //console.log("Current value of currentTable is: ", currentTable);
           request = currentTable?.update;
-          console.log("The update request is: ", request);
+          //console.log("The update request is: ", request);
           successMessage = 'Values updated successfully.';
           break;
         }

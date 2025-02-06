@@ -56,10 +56,10 @@ export const useSavedState = <TValue extends object | string | number | []>({
       const savedValue = await getValue();
       if (savedValue) {
         if (typeof savedValue === 'object') {
-          console.log("saveValue as an Object: ", savedValue);
+          // console.log("saveValue as an Object: ", savedValue);
           setValue((value) => merge({ ...(value as object) }, savedValue));
         } else {
-          console.log("saveValue as an notObject: ", savedValue);
+          // console.log("saveValue as an notObject: ", savedValue);
           setValue(savedValue);
           
         }
