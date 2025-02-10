@@ -53,7 +53,7 @@ export const useUpdateRow = ({
         case 'update': {
           //console.log("Current value of currentTable is: ", currentTable);
           request = currentTable?.update;
-          //console.log("The update request is: ", request);
+          console.log("The update request is: ", request);
           successMessage = 'Values updated successfully.';
           break;
         }
@@ -70,14 +70,16 @@ export const useUpdateRow = ({
       if (!request) {
         return;
       }
-      
+      request.payload.url_options.data = JSON.stringify(row);
       try {
-        const response = await datasourceRequest({
+        const responseInput = {
           query: request.payload,
           datasource: request.datasource,
           replaceVariables,
           payload: row,
-        });
+        };
+        console.log("INPUT TO DATASOURCE REQUEST: ", responseInput);
+        const response = await datasourceRequest(responseInput);
         console.log("This is the response: ", response);
 
         /**
